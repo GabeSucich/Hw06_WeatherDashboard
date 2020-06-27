@@ -48,20 +48,32 @@ function get_UV(latitude, longitude) {
 
 $('#city-search').submit(function(event) {
     event.preventDefault()
+    var city_name = city_input.val()
     city_input.val("")
+    var latitude;
+    var longitude;
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city_name + "&appid=abbbd9706c1899a15213e1cbfacf2ef6"
     $.ajax({
-        url: "https://api.openweathermap.org/data/2.5/weather?q=" + $(this).val() + "&appid=abbbd9706c1899a15213e1cbfacf2ef6",
+        url: queryURL,
         method: "GET"
     }).then(function (response) {
         clear_display();
+        city_input.val("");
         var kelvin = response.main.temp
         var fahrenheit = Math.round((parseFloat((kelvin - 273)*(9/5)) + parseFloat(32))*10)/10
         var wind_speed_value = response.wind.speed
         var humidity_value = response.main.humidity
-        var longitude = response.coord.lon
-        var latitude = response.coord.lat
+        longitude = response.coord.lon
+        latitude = response.coord.lat
+
+        city_display.text(city_name);
+        temp_display.text(fahrenheit + " F");
+        humid_display.text(humidity_value + " %");
+        wind_display.text(wind_speed_value + " mph");
+
+
         
-        console.log([fahrenheit, wind_speed_value, humidity_value, UV_index])
+    
 })
 })
 
