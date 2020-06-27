@@ -27,13 +27,12 @@ function clear_display() {
 render_history()
 // Function which will be called when a city is entered in the search bar and must be added to history
 function addto_history(city) {
-    var city = city.toLowerCase()
-    
+    city = proper_case(city)
     if (!city_history.includes(city)) {
         city_history.push(city);
         localStorage.setItem("city_history", JSON.stringify(city_history))
-    }
-    render_history()
+    };
+    render_history();
 }
 
 function make_history_div(city_name) {
@@ -70,7 +69,7 @@ function get_UV(latitude, longitude) {
 
 $('#city-search').submit(function(event) {
     event.preventDefault()
-    var city_name = city_input.val().toLowerCase()
+    var city_name = proper_case(city_input.val())
     addto_history(city_name)
     city_input.val("")
     var current_queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city_name + "&appid=abbbd9706c1899a15213e1cbfacf2ef6"
@@ -93,7 +92,6 @@ $('#city-search').submit(function(event) {
         wind_display.text(wind_speed_value + " mph");
 
         uv_queryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=abbbd9706c1899a15213e1cbfacf2ef6&lat=" + latitude + "&lon=" + longitude
-            console.log(uv_queryURL)
             $.ajax({
                 url: uv_queryURL,
                 method: 'GET'
@@ -107,5 +105,12 @@ $('#city-search').submit(function(event) {
     
 })
 
+function proper_case(string) {
+    var string_first = string[0].toUpperCase();
+    var string_rest = string.slice(1).toLowerCase();
+    console.log(string_first);
+    console.log(string_rest)
+    var formatted = string_first + string_rest;
+    return formatted
 
-
+}
