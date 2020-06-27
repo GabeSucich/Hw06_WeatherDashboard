@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    
+
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Weather Dashboard</title>
 </head>
@@ -23,14 +23,14 @@
 
         <div class="row m-0 p-0" id="outside-row">
 
-            <div class='col-xs-4 col-sm-4 col-md-4 col-lg-4 bg-m-0' id="search-div">
+            <div class='col-xs-3 col-sm-3 col-md-3 col-lg- bg-m-0' id="search-div">
                 <form>
                     <input id="city-search" placeholder="Enter a city">
-                    <button type="search" id="search-button">Search</button>
+                    <button type="search" id="submit-btn">Search</button>
                 </form>
 
                 <br>
-                
+
                 <div class="history">Example</div>
                 <div class="history">Example</div>
                 <div class="history">Example</div>
@@ -41,15 +41,58 @@
                 <div class="history">Example</div>
             </div>
 
-            <div class='col-xs-8 col-sm-8 col-md-8 col-lg-8 py-3 bg-white'>
-    
+            <div class='col-xs-9 col-sm-9 col-md-9 col-lg-9 py-3 bg-white' id="main-display">
+                <h1>Chicago</h1>
+                <hr>
+                <h6> Temperature</h6>
+                <br>
+                <h6> Humidity</h6>
+                <br>
+                <h6>Wind Speed</h6>
+                <br>
+                <h6>UV index</h6>
+
+                <br>
+                <hr>
+                <br>
+
+                <div class="card-deck">
+                    <div class="card">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
     </div>
-
-
-
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -61,6 +104,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
 

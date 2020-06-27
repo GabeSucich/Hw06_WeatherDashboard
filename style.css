@@ -15,7 +15,7 @@ nav .h1 {
     padding-bottom: 40px;
 }
 
-#search-button {
+#submit-btn {
     margin-left: 0;
 }
 
@@ -43,7 +43,7 @@ nav .h1 {
     padding-bottom: 20px;
 }
 
-#daily-display {
-    width:100%;
+#main-display {
+    line-height:1.5;
 }
 
