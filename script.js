@@ -21,7 +21,7 @@ function clear_display() {
     humid_display.text("");
     wind_display.text("");
     uv_display.text("");
-    forecast_cards.each(function(index){
+    forecast_cards.each(function (index) {
         $(this).empty()
     })
 };
@@ -62,12 +62,12 @@ function get_UV(latitude, longitude) {
     $.ajax({
         url: "https://api.openweathermap.org/data/2.5/uvi?appid=abbbd9706c1899a15213e1cbfacf2ef6&lat=" + latitude + "&lon=" + longitude,
         method: "GET"
-    }).then(function(response) {
-        
+    }).then(function (response) {
+
     })
 };
 
-$('#city-search').submit(function(event) {
+$('#city-search').submit(function (event) {
     event.preventDefault()
     var city_name = proper_case(city_input.val())
     addto_history(city_name)
@@ -80,7 +80,7 @@ $('#city-search').submit(function(event) {
         clear_display();
         city_input.val("");
         var kelvin = response.main.temp
-        var fahrenheit = Math.round((parseFloat((kelvin - 273)*(9/5)) + parseFloat(32))*10)/10
+        var fahrenheit = Math.round((parseFloat((kelvin - 273) * (9 / 5)) + parseFloat(32)) * 10) / 10
         var wind_speed_value = response.wind.speed
         var humidity_value = response.main.humidity
         let longitude = response.coord.lon
@@ -92,29 +92,29 @@ $('#city-search').submit(function(event) {
         wind_display.text(wind_speed_value + " mph");
 
         uv_queryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=abbbd9706c1899a15213e1cbfacf2ef6&lat=" + latitude + "&lon=" + longitude
-            $.ajax({
-                url: uv_queryURL,
-                method: 'GET'
-            }).then(function(response) {
-                var index = response.value;
-                uv_display.text(index)
-            })
+        $.ajax({
+            url: uv_queryURL,
+            method: 'GET'
+        }).then(function (response) {
+            var index = response.value;
+            uv_display.text(index)
         })
+    })
     var fiveday_queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city_name + "&appid=abbbd9706c1899a15213e1cbfacf2ef6";
     $.ajax({
         url: fiveday_queryURL,
         method: 'GET'
-    }).then(function(response) {
+    }).then(function (response) {
         console.log(response)
-        var day1 = {temp: response.list[4].main.temp, humidity: response.list[4].main.humidity, cond :response.list[4].weather[0].main, date: response.list[4].dt_txt.slice(0, 10)}
-        var day2 = {temp: response.list[12].main.temp, humidity: response.list[12].main.humidity, cond: response.list[12].weather[0].main, date: response.list[12].dt_txt.slice(0, 10)}
-        var day3 = {temp: response.list[20].main.temp, humidity: response.list[20].main.humidity, cond: response.list[20].weather[0].main, date: response.list[20].dt_txt.slice(0, 10)}
-        var day4 = {temp: response.list[28].main.temp, humidity: response.list[28].main.humidity, cond: response.list[28].weather[0].main, date: response.list[28].dt_txt.slice(0, 10)}
-        var day5 = {temp: response.list[36].main.temp, humidity: response.list[36].main.humidity, cond: response.list[36].weather[0].main, date: response.list[36].dt_txt.slice(0, 10)}
+        var day1 = { temp: response.list[4].main.temp, humidity: response.list[4].main.humidity, cond: response.list[4].weather[0].main, date: response.list[4].dt_txt.slice(0, 10) }
+        var day2 = { temp: response.list[12].main.temp, humidity: response.list[12].main.humidity, cond: response.list[12].weather[0].main, date: response.list[12].dt_txt.slice(0, 10) }
+        var day3 = { temp: response.list[20].main.temp, humidity: response.list[20].main.humidity, cond: response.list[20].weather[0].main, date: response.list[20].dt_txt.slice(0, 10) }
+        var day4 = { temp: response.list[28].main.temp, humidity: response.list[28].main.humidity, cond: response.list[28].weather[0].main, date: response.list[28].dt_txt.slice(0, 10) }
+        var day5 = { temp: response.list[36].main.temp, humidity: response.list[36].main.humidity, cond: response.list[36].weather[0].main, date: response.list[36].dt_txt.slice(0, 10) }
         var forecast_array = [day1, day2, day3, day4, day5]
 
 
-        $('.card').each(function(index) {
+        $('.card').each(function (index) {
             $(this).empty();
             var info = forecast_array[index]
             var date = $('<p>');
@@ -137,37 +137,43 @@ $('#city-search').submit(function(event) {
 
 
         })
-            
-            
-            
 
-        })
 
-        })
+
+
+    })
+
+})
+
+
+$(document).on("click", ".history", function(event) {
+    city_input.val($(this).text());
+    city_form.submit();
+})
 
 function proper_case(string) {
-    var string_first = string[0].toUpperCase();
-    var string_rest = string.slice(1).toLowerCase();
-    var formatted = string_first + string_rest;
-    return formatted
+        var string_first = string[0].toUpperCase();
+        var string_rest = string.slice(1).toLowerCase();
+        var formatted = string_first + string_rest;
+        return formatted
 
-}
+    }
 
 // Displays forecast information on the appropriate card. 'info' is a dictionary response created from the API response. Div is the card element on the HTML.
-function forecast_displayer (info, El) {
-    console.log($('.card-deck').find('div'))
-    var temperature = info.temp;
-    var date = date_reformatter(info.date);
-    var condition = info.cond
-    El.find('p').text(date);
-    El.find('img').attr("data-condition", condition);
-    El.find('div').text(temperature + ' F')
-}
+function forecast_displayer(info, El) {
+        console.log($('.card-deck').find('div'))
+        var temperature = info.temp;
+        var date = date_reformatter(info.date);
+        var condition = info.cond
+        El.find('p').text(date);
+        El.find('img').attr("data-condition", condition);
+        El.find('div').text(temperature + ' F')
+    }
 
 // Takes in a date of form YYYY-MM-DD and returns it in form MM/DD
 function date_reformatter(date) {
-    var month = date.slice(5, 7);
-    var day = date.slice(8);
-    return month + '/' + day
-}
+        var month = date.slice(5, 7);
+        var day = date.slice(8);
+        return month + '/' + day
+    }
 
