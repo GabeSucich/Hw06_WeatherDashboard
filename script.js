@@ -11,9 +11,9 @@ var temp_display = $('#temp-display')
 var humid_display = $('#humid-display')
 var wind_display = $('#wind-display')
 var uv_display = $('#uv-display')
-var forecast_cards = $('.card')
+let forecast_cards = $('.card')
 
-render_history()
+render_history();
 
 function clear_display() {
     city_display.text("");
@@ -105,14 +105,45 @@ $('#city-search').submit(function(event) {
         url: fiveday_queryURL,
         method: 'GET'
     }).then(function(response) {
-        var day1 = {temp: response.list[4].main.temp, cond: response.list[4].weather[0].main, date: response.list[4].dt_txt.slice(0, 10)}
-        var day2 = {temp: response.list[12].main.temp, cond: response.list[12].weather[0].main, date: response.list[12].dt_txt.slice(0, 10)}
-        var day3 = {temp: response.list[20].main.temp, cond: response.list[20].weather[0].main, date: response.list[20].dt_txt.slice(0, 10)}
-        var day4 = {temp: response.list[28].main.temp, cond: response.list[28].weather[0].main, date: response.list[28].dt_txt.slice(0, 10)}
-        var day5 = {temp: response.list[36].main.temp, cond: response.list[36].weather[0].main, date: response.list[36].dt_txt.slice(0, 10)}
+        console.log(response)
+        var day1 = {temp: response.list[4].main.temp, humidity: response.list[4].main.humidity, cond :response.list[4].weather[0].main, date: response.list[4].dt_txt.slice(0, 10)}
+        var day2 = {temp: response.list[12].main.temp, humidity: response.list[12].main.humidity, cond: response.list[12].weather[0].main, date: response.list[12].dt_txt.slice(0, 10)}
+        var day3 = {temp: response.list[20].main.temp, humidity: response.list[20].main.humidity, cond: response.list[20].weather[0].main, date: response.list[20].dt_txt.slice(0, 10)}
+        var day4 = {temp: response.list[28].main.temp, humidity: response.list[28].main.humidity, cond: response.list[28].weather[0].main, date: response.list[28].dt_txt.slice(0, 10)}
+        var day5 = {temp: response.list[36].main.temp, humidity: response.list[36].main.humidity, cond: response.list[36].weather[0].main, date: response.list[36].dt_txt.slice(0, 10)}
         var forecast_array = [day1, day2, day3, day4, day5]
-    })
-})
+
+
+        $('.card').each(function(index) {
+            $(this).empty();
+            var info = forecast_array[index]
+            var date = $('<p>');
+            date.text(date_reformatter(info.date));
+            date.attr("class", "forecast-date")
+            var condition = $('<img>');
+            condition.attr("class", "forecast-img mb-2")
+            condition.attr('alt', info.cond);
+            // Function to set src
+            var temp = $('<p>');
+            temp.text('Temperature: ' + info.temp + ' F')
+            temp.attr('class', 'forecast-info')
+            var humidity = $('<p>')
+            humidity.text('Humidity: ' + info.humidity + ' %');
+            humidity.attr('class', 'forecast-info');
+            $(this).append(date);
+            $(this).append(condition);
+            $(this).append(temp);
+            $(this).append(humidity)
+
+
+        })
+            
+            
+            
+
+        })
+
+        })
 
 function proper_case(string) {
     var string_first = string[0].toUpperCase();
@@ -120,6 +151,17 @@ function proper_case(string) {
     var formatted = string_first + string_rest;
     return formatted
 
+}
+
+// Displays forecast information on the appropriate card. 'info' is a dictionary response created from the API response. Div is the card element on the HTML.
+function forecast_displayer (info, El) {
+    console.log($('.card-deck').find('div'))
+    var temperature = info.temp;
+    var date = date_reformatter(info.date);
+    var condition = info.cond
+    El.find('p').text(date);
+    El.find('img').attr("data-condition", condition);
+    El.find('div').text(temperature + ' F')
 }
 
 // Takes in a date of form YYYY-MM-DD and returns it in form MM/DD
