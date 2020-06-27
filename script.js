@@ -50,11 +50,9 @@ $('#city-search').submit(function(event) {
     event.preventDefault()
     var city_name = city_input.val()
     city_input.val("")
-    var latitude;
-    var longitude;
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city_name + "&appid=abbbd9706c1899a15213e1cbfacf2ef6"
+    var current_queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city_name + "&appid=abbbd9706c1899a15213e1cbfacf2ef6"
     $.ajax({
-        url: queryURL,
+        url: current_queryURL,
         method: "GET"
     }).then(function (response) {
         clear_display();
@@ -63,18 +61,27 @@ $('#city-search').submit(function(event) {
         var fahrenheit = Math.round((parseFloat((kelvin - 273)*(9/5)) + parseFloat(32))*10)/10
         var wind_speed_value = response.wind.speed
         var humidity_value = response.main.humidity
-        longitude = response.coord.lon
-        latitude = response.coord.lat
+        let longitude = response.coord.lon
+        let latitude = response.coord.lat
 
         city_display.text(city_name);
         temp_display.text(fahrenheit + " F");
         humid_display.text(humidity_value + " %");
         wind_display.text(wind_speed_value + " mph");
 
+        uv_queryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=abbbd9706c1899a15213e1cbfacf2ef6&lat=" + latitude + "&lon=" + longitude
+            console.log(uv_queryURL)
+            $.ajax({
+                url: uv_queryURL,
+                method: 'GET'
+            }).then(function(response) {
+                var index = response.value;
+                uv_display.text(index)
+            })
 
-        
+    })
+
     
-})
 })
 
 
