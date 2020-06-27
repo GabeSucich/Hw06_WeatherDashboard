@@ -1,0 +1,49 @@
+body {
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSdSMpsiO1LP8znahx0fBuePON98U2gnFuhQw&usqp=CAU');
+    background-size: cover;
+    background-repeat:no-repeat;
+}
+
+nav .h1 {
+    font-size: xx-large;
+}
+
+#search-div {
+    background-color: lightgray;
+    opacity: 70%;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+#search-button {
+    margin-left: 0;
+}
+
+.history {
+    background-color: white;
+    opacity: 90%;
+    padding-top: 4px;
+    padding-left: 10px;
+    border-top: black;
+    border-style: solid;
+    border-width: thin;
+    height: 35px;
+    vertical-align: center;
+}
+
+#main-display {
+    background-color: white;
+
+}
+
+#search-div {
+    background-color: lightgray;
+    opacity: 70%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#daily-display {
+    width:100%;
+}
+
