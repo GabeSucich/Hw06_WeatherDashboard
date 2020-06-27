@@ -13,6 +13,8 @@ var wind_display = $('#wind-display')
 var uv_display = $('#uv-display')
 var forecast_cards = $('.card')
 
+render_history()
+
 function clear_display() {
     city_display.text("");
     temp_display.text("");
@@ -22,9 +24,8 @@ function clear_display() {
     forecast_cards.each(function(index){
         $(this).empty()
     })
-}
+};
 
-render_history()
 // Function which will be called when a city is entered in the search bar and must be added to history
 function addto_history(city) {
     city = proper_case(city)
@@ -33,7 +34,7 @@ function addto_history(city) {
         localStorage.setItem("city_history", JSON.stringify(city_history))
     };
     render_history();
-}
+};
 
 function make_history_div(city_name) {
     var new_div = $('<div>');
@@ -41,7 +42,7 @@ function make_history_div(city_name) {
     new_div.attr("id", city_name);
     new_div.text(city_name);
     history_div.prepend(new_div)
-}
+};
 
 // Function which will update the city_history array with local storage data
 function render_history() {
@@ -55,7 +56,7 @@ function render_history() {
             make_history_div(element);
         }
     }
-}
+};
 
 function get_UV(latitude, longitude) {
     $.ajax({
@@ -64,8 +65,7 @@ function get_UV(latitude, longitude) {
     }).then(function(response) {
         
     })
-}
-
+};
 
 $('#city-search').submit(function(event) {
     event.preventDefault()
@@ -99,18 +99,33 @@ $('#city-search').submit(function(event) {
                 var index = response.value;
                 uv_display.text(index)
             })
-
+        })
+    var fiveday_queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city_name + "&appid=abbbd9706c1899a15213e1cbfacf2ef6";
+    $.ajax({
+        url: fiveday_queryURL,
+        method: 'GET'
+    }).then(function(response) {
+        var day1 = {temp: response.list[4].main.temp, cond: response.list[4].weather[0].main, date: response.list[4].dt_txt.slice(0, 10)}
+        var day2 = {temp: response.list[12].main.temp, cond: response.list[12].weather[0].main, date: response.list[12].dt_txt.slice(0, 10)}
+        var day3 = {temp: response.list[20].main.temp, cond: response.list[20].weather[0].main, date: response.list[20].dt_txt.slice(0, 10)}
+        var day4 = {temp: response.list[28].main.temp, cond: response.list[28].weather[0].main, date: response.list[28].dt_txt.slice(0, 10)}
+        var day5 = {temp: response.list[36].main.temp, cond: response.list[36].weather[0].main, date: response.list[36].dt_txt.slice(0, 10)}
+        var forecast_array = [day1, day2, day3, day4, day5]
     })
-
-    
 })
 
 function proper_case(string) {
     var string_first = string[0].toUpperCase();
     var string_rest = string.slice(1).toLowerCase();
-    console.log(string_first);
-    console.log(string_rest)
     var formatted = string_first + string_rest;
     return formatted
 
 }
+
+// Takes in a date of form YYYY-MM-DD and returns it in form MM/DD
+function date_reformatter(date) {
+    var month = date.slice(5, 7);
+    var day = date.slice(8);
+    return month + '/' + day
+}
+
