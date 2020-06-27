@@ -27,6 +27,8 @@ function clear_display() {
 render_history()
 // Function which will be called when a city is entered in the search bar and must be added to history
 function addto_history(city) {
+    var city = city.toLowerCase()
+    
     if (!city_history.includes(city)) {
         city_history.push(city);
         localStorage.setItem("city_history", JSON.stringify(city_history))
@@ -46,10 +48,14 @@ function make_history_div(city_name) {
 function render_history() {
     history_div.empty()
     city_history = JSON.parse(localStorage.getItem("city_history"))
-    for (const element of city_history) {
-        make_history_div(element);
+    if (city_history === null) {
+        city_history = [];
     }
-
+    else {
+        for (const element of city_history) {
+            make_history_div(element);
+        }
+    }
 }
 
 function get_UV(latitude, longitude) {
@@ -64,7 +70,7 @@ function get_UV(latitude, longitude) {
 
 $('#city-search').submit(function(event) {
     event.preventDefault()
-    var city_name = city_input.val()
+    var city_name = city_input.val().toLowerCase()
     addto_history(city_name)
     city_input.val("")
     var current_queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city_name + "&appid=abbbd9706c1899a15213e1cbfacf2ef6"
