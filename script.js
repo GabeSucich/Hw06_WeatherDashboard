@@ -76,8 +76,9 @@ $('#city-search').submit(function (event) {
         var humidity_value = response.main.humidity
         let longitude = response.coord.lon
         let latitude = response.coord.lat
+        var today = moment().format('L');
 
-        city_display.text(city_name);
+        city_display.text(city_name + '       (' + today + ')');
         temp_display.text(fahrenheit + " F");
         humid_display.text(humidity_value + " %");
         wind_display.text(wind_speed_value + " mph");

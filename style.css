@@ -21,6 +21,23 @@ nav .h1 {
 
 .card {
     font-size: small;
+    background-color: blue;
+    opacity: 70%;
+    color: white;
+    
+}
+
+.forecast-date {
+    font-size: large;
+}
+
+#display-date {
+    
+}
+
+.forecast-img {
+    width:100%;
+    height: 90px;
 }
 
 .history {
