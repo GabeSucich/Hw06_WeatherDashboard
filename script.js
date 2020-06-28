@@ -58,15 +58,6 @@ function render_history() {
     }
 };
 
-function get_UV(latitude, longitude) {
-    $.ajax({
-        url: "https://api.openweathermap.org/data/2.5/uvi?appid=abbbd9706c1899a15213e1cbfacf2ef6&lat=" + latitude + "&lon=" + longitude,
-        method: "GET"
-    }).then(function (response) {
-
-    })
-};
-
 $('#city-search').submit(function (event) {
     event.preventDefault()
     var city_name = proper_case(city_input.val())
@@ -113,7 +104,6 @@ $('#city-search').submit(function (event) {
         var day5 = { temp: response.list[36].main.temp, humidity: response.list[36].main.humidity, cond: response.list[36].weather[0].main, date: response.list[36].dt_txt.slice(0, 10) }
         var forecast_array = [day1, day2, day3, day4, day5]
 
-
         $('.card').each(function (index) {
             $(this).empty();
             var info = forecast_array[index]
@@ -134,15 +124,11 @@ $('#city-search').submit(function (event) {
             $(this).append(condition);
             $(this).append(temp);
             $(this).append(humidity)
-
-
+        
+        
         })
-
-
-
-
+        set_images()
     })
-
 })
 
 
@@ -159,21 +145,33 @@ function proper_case(string) {
 
     }
 
-// Displays forecast information on the appropriate card. 'info' is a dictionary response created from the API response. Div is the card element on the HTML.
-function forecast_displayer(info, El) {
-        console.log($('.card-deck').find('div'))
-        var temperature = info.temp;
-        var date = date_reformatter(info.date);
-        var condition = info.cond
-        El.find('p').text(date);
-        El.find('img').attr("data-condition", condition);
-        El.find('div').text(temperature + ' F')
-    }
-
 // Takes in a date of form YYYY-MM-DD and returns it in form MM/DD
 function date_reformatter(date) {
         var month = date.slice(5, 7);
         var day = date.slice(8);
         return month + '/' + day
     }
+
+function set_images() {
+    var images = $('.forecast-img');
+    images.each(function(index) {
+        switch($(this).attr('alt')) {
+            case 'Clear':
+                $(this).attr('src', 'weather_images/clear.png');
+                break;
+            
+            case 'Clouds':
+                $(this).attr('src', 'weather_images/cloud.png');
+                break;
+            
+            case 'Rain':
+                $(this).attr('src', 'weather_images/rain.png');
+                break;
+            
+            case 'Snow':
+                $(this).attr('src', 'weather_images/snow.png');
+                break;
+        }
+    })
+}
 
