@@ -86,7 +86,7 @@ $('#city-search').submit(function (event) {
         temp_display.text(fahrenheit + " F");
         humid_display.text(humidity_value + " %");
         wind_display.text(wind_speed_value + " mph");
-    
+
 
         uv_queryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=abbbd9706c1899a15213e1cbfacf2ef6&lat=" + latitude + "&lon=" + longitude
         $.ajax({
@@ -121,7 +121,7 @@ $('#city-search').submit(function (event) {
             condition.attr("class", "forecast-img mb-2")
             condition.attr('alt', info.cond);
             var temp = $('<p>');
-            temp.text('Temperature: ' + info.temp + ' F')
+            temp.text('Temperature: ' + Math.round(10*((info.temp-273)*(9/5) + 32))/10 + ' F')
             temp.attr('class', 'forecast-info')
             var humidity = $('<p>')
             humidity.text('Humidity: ' + info.humidity + ' %');
@@ -130,52 +130,52 @@ $('#city-search').submit(function (event) {
             $(this).append(condition);
             $(this).append(temp);
             $(this).append(humidity)
-        
-        
+
+
         })
         set_images()
     })
 })
 
 // Event listener handling clicks on cities in the search history
-$(document).on("click", ".history", function(event) {
+$(document).on("click", ".history", function (event) {
     city_input.val($(this).text());
     city_form.submit();
 })
 
 // Function which turns entered city into proper noun string.
 function proper_case(string) {
-        var string_first = string[0].toUpperCase();
-        var string_rest = string.slice(1).toLowerCase();
-        var formatted = string_first + string_rest;
-        return formatted
+    var string_first = string[0].toUpperCase();
+    var string_rest = string.slice(1).toLowerCase();
+    var formatted = string_first + string_rest;
+    return formatted
 
-    }
+}
 
 // Takes in a date of form YYYY-MM-DD and returns it in form MM/DD
 function date_reformatter(date) {
-        var month = date.slice(5, 7);
-        var day = date.slice(8);
-        return month + '/' + day
-    }
+    var month = date.slice(5, 7);
+    var day = date.slice(8);
+    return month + '/' + day
+}
 
 // Function handling the changing of background color for the uv display
 function set_uv_color() {
     var uv_display = $('#uv-display')
     var uv_index = parseFloat(uv_display.text());
-    if (0<=uv_index && uv_index<=2) {
+    if (0 <= uv_index && uv_index <= 2) {
         uv_display.css("background-color", 'green')
         uv_display.css("color", "black")
     }
-    else if (2<uv_index && uv_index<=5) {
+    else if (2 < uv_index && uv_index <= 5) {
         uv_display.css("background-color", 'yellow')
         uv_display.css("color", "black")
     }
-    else if (5<uv_index && uv_index<=7.5) {
+    else if (5 < uv_index && uv_index <= 7.5) {
         uv_display.css("background-color", 'orange')
         uv_display.css("color", "white")
     }
-    else if (7.5<uv_index && uv_index<10) {
+    else if (7.5 < uv_index && uv_index < 10) {
         uv_display.css("background-color", 'red')
         uv_display.css("color", "white")
     }
@@ -183,26 +183,26 @@ function set_uv_color() {
         uv_display.css("background-color", 'purple')
         uv_display.css("color", "white")
     }
-    
+
 }
 
 // Function which sets the images for weather in the forecast cards.
 function set_images() {
     var images = $('.forecast-img');
-    images.each(function(index) {
-        switch($(this).attr('alt')) {
+    images.each(function (index) {
+        switch ($(this).attr('alt')) {
             case 'Clear':
                 $(this).attr('src', 'weather_images/clear.png');
                 break;
-            
+
             case 'Clouds':
                 $(this).attr('src', 'weather_images/cloud.png');
                 break;
-            
+
             case 'Rain':
                 $(this).attr('src', 'weather_images/rain.png');
                 break;
-            
+
             case 'Snow':
                 $(this).attr('src', 'weather_images/snow.png');
                 break;
