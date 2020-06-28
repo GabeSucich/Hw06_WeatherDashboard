@@ -15,6 +15,9 @@ nav .h1 {
     padding-bottom: 40px;
 }
 
+#uv-display {
+    font-weight: bold;
+}
 #submit-btn {
     margin-left: 0;
 }
@@ -32,7 +35,7 @@ nav .h1 {
 }
 
 #display-date {
-    
+
 }
 
 .forecast-img {

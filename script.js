@@ -82,6 +82,7 @@ $('#city-search').submit(function (event) {
         temp_display.text(fahrenheit + " F");
         humid_display.text(humidity_value + " %");
         wind_display.text(wind_speed_value + " mph");
+    
 
         uv_queryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=abbbd9706c1899a15213e1cbfacf2ef6&lat=" + latitude + "&lon=" + longitude
         $.ajax({
@@ -89,7 +90,8 @@ $('#city-search').submit(function (event) {
             method: 'GET'
         }).then(function (response) {
             var index = response.value;
-            uv_display.text(index)
+            uv_display.text("  " + index + "  ")
+            set_uv_color()
         })
     })
     var fiveday_queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city_name + "&appid=abbbd9706c1899a15213e1cbfacf2ef6";
@@ -152,6 +154,32 @@ function date_reformatter(date) {
         var day = date.slice(8);
         return month + '/' + day
     }
+
+function set_uv_color() {
+    var uv_display = $('#uv-display')
+    var uv_index = parseFloat(uv_display.text());
+    if (0<=uv_index && uv_index<=2) {
+        uv_display.css("background-color", 'green')
+        uv_display.css("color", "black")
+    }
+    else if (2<uv_index && uv_index<=5) {
+        uv_display.css("background-color", 'yellow')
+        uv_display.css("color", "black")
+    }
+    else if (5<uv_index && uv_index<=7.5) {
+        uv_display.css("background-color", 'orange')
+        uv_display.css("color", "white")
+    }
+    else if (7.5<uv_index && uv_index<10) {
+        uv_display.css("background-color", 'red')
+        uv_display.css("color", "white")
+    }
+    else {
+        uv_display.css("background-color", 'purple')
+        uv_display.css("color", "white")
+    }
+    
+}
 
 function set_images() {
     var images = $('.forecast-img');
