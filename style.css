@@ -4,6 +4,11 @@ body {
     background-repeat:no-repeat;
 }
 
+#main-display {
+    background-color: white;
+    line-height: 1.5;
+}
+
 nav .h1 {
     font-size: xx-large;
 }
@@ -15,32 +20,8 @@ nav .h1 {
     padding-bottom: 40px;
 }
 
-#uv-display {
-    font-weight: bold;
-}
 #submit-btn {
     margin-left: 0;
-}
-
-.card {
-    font-size: small;
-    background-color: blue;
-    opacity: 70%;
-    color: white;
-    
-}
-
-.forecast-date {
-    font-size: large;
-}
-
-#display-date {
-
-}
-
-.forecast-img {
-    width:100%;
-    height: 90px;
 }
 
 .history {
@@ -55,19 +36,31 @@ nav .h1 {
     vertical-align: center;
 }
 
-#main-display {
-    background-color: white;
-
+#uv-display {
+    font-weight: bold;
 }
 
-#search-div {
-    background-color: lightgray;
+.card {
+    font-size: small;
+    background-color: blue;
     opacity: 70%;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    color: white;
+
 }
 
-#main-display {
-    line-height:1.5;
+.forecast-date {
+    font-size: large;
 }
+
+.forecast-img {
+    width:100%;
+    height: 90px;
+}
+
+
+
+
+
+
+
 

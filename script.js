@@ -13,8 +13,10 @@ var wind_display = $('#wind-display')
 var uv_display = $('#uv-display')
 let forecast_cards = $('.card')
 
+// Renders the history upon initializing the page.
 render_history();
 
+// Function that clears the current display.
 function clear_display() {
     city_display.text("");
     temp_display.text("");
@@ -36,6 +38,7 @@ function addto_history(city) {
     render_history();
 };
 
+// Function which creates a new div in the search history bar
 function make_history_div(city_name) {
     var new_div = $('<div>');
     new_div.attr("class", "history");
@@ -58,6 +61,7 @@ function render_history() {
     }
 };
 
+// Main event listener for hitting the search button
 $('#city-search').submit(function (event) {
     event.preventDefault()
     var city_name = proper_case(city_input.val())
@@ -116,7 +120,6 @@ $('#city-search').submit(function (event) {
             var condition = $('<img>');
             condition.attr("class", "forecast-img mb-2")
             condition.attr('alt', info.cond);
-            // Function to set src
             var temp = $('<p>');
             temp.text('Temperature: ' + info.temp + ' F')
             temp.attr('class', 'forecast-info')
@@ -134,12 +137,13 @@ $('#city-search').submit(function (event) {
     })
 })
 
-
+// Event listener handling clicks on cities in the search history
 $(document).on("click", ".history", function(event) {
     city_input.val($(this).text());
     city_form.submit();
 })
 
+// Function which turns entered city into proper noun string.
 function proper_case(string) {
         var string_first = string[0].toUpperCase();
         var string_rest = string.slice(1).toLowerCase();
@@ -155,6 +159,7 @@ function date_reformatter(date) {
         return month + '/' + day
     }
 
+// Function handling the changing of background color for the uv display
 function set_uv_color() {
     var uv_display = $('#uv-display')
     var uv_index = parseFloat(uv_display.text());
@@ -181,6 +186,7 @@ function set_uv_color() {
     
 }
 
+// Function which sets the images for weather in the forecast cards.
 function set_images() {
     var images = $('.forecast-img');
     images.each(function(index) {
